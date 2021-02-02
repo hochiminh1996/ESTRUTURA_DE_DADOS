@@ -58,7 +58,7 @@ int escolha(int opt, PILHA *pont_pilha){
 						printf("[%i] = %i \n",i,pont_pilha->itens[i]);
 					}
 				}else{
-				printf("TOPO %i\n\n",pont_pilha->topo);
+				printf("TOPO %i [%i]\n\n",pont_pilha->topo,pont_pilha->itens[pont_pilha->topo]);
 					for(i=0;i<=pont_pilha->topo;i++){
 						printf("[%i] = %i \n",i,pont_pilha->itens[i]);
 					}
@@ -76,7 +76,7 @@ int escolha(int opt, PILHA *pont_pilha){
 			if(pont_pilha->topo < MAX-1){
 			/*
 				A condição acima compara o tamanho da PILHA com o tamanho do indice máximo = 3
-				-1 < 3-1(2) = true = insere
+				-1 < 3-1(2) = true = insere 
 				 0 < 3-1(2) = true = insere
 				 1 < 3-1(2) = true = insere
 				 2 < 3-1(0) = falso = encerra.	
