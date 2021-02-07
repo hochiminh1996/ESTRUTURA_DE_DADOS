@@ -1,7 +1,8 @@
 /*
 	ALGORITMO : PILHA
 	AUTOR : FELIPPE M.
-	DESCRIÇÃO : APLICAÇÃO DOS CONCEITOS BÁSICOS DE ESTRUTURA DE DADOS : FILA	
+	DESCRIÇÃO : APLICAÇÃO DOS CONCEITOS BÁSICOS DE ESTRUTURA DE DADOS : FILA E BUSCA BINÁRIA.
+	
 */
 #include <stdlib.h>
 #include <stdio.h>
@@ -46,7 +47,7 @@ void inicializar(fila *pont_fila){
 }
 
 int escolha(int opt, fila *pont_fila){
-	int valor,i,aux,primeiro;
+	int valor,i,j,primeiro,chave,inicio, fim,busca,quant;
 	
 	// COM BASE NO VALOR CAPTURADO DA INTERFACE (MENU)
 	switch(opt){
@@ -55,7 +56,10 @@ int escolha(int opt, fila *pont_fila){
 				printf("FILA VAZIA...\n\n");//-1 = VAZIA
 				system("pause");
 				system("cls");
-			}else{//CASO TENHA VALOR IRÁ EXIBIR O NOSSO VETOR
+			}else{//CASO TENHA VALORES NA FILA, IRÁ EXIBIR SEUS VALORES
+	
+							
+				// EXIBE OS ELEMENTOS JÁ ORDENADOS
 				for(i=0;i<=pont_fila->total;i++){
 					printf("\nELEMENTOS : [%i] %i",i,pont_fila->itens[i]);
 					
@@ -114,7 +118,34 @@ int escolha(int opt, fila *pont_fila){
 			}
 		break;
 		case 3:
-			printf("\nFUNÇÃO INCOMPLETA\n\n");
+			if(pont_fila->total == -1){
+				printf("NÃO HÁ ELEMENTOS NA FILA...\n\n");
+			}else{
+				printf("DIGITE UM VALOR : ");
+				scanf("%i",&chave);//valor a ser pesquisado
+				
+				quant = pont_fila->total;
+				/*
+					IMPORTANTE : QUANT ARMAZENA O TOTAL DE ALEMENTOS ATÉ ENTÃO
+					
+				*/
+				busca = busca_binaria(pont_fila,inicio,quant, chave);
+				/*
+					BUSCA RETORNA O VALOR DA POSIÇÃO DO ELEMENTO CASO SEJA LOCALIZADO.
+					pont_fila (são os intes)
+					inicio = começa do zero
+					quant = o total de elementos que foram adicionados
+					chave = o elemento digitado pelo usuário
+				*/
+				
+				
+				if(busca!=-1){
+					printf("\nVALOR LOCALIZADO : [%i] -> %i\n\n",busca,pont_fila->itens[busca]);
+					
+				}else {
+					printf("VALOR NÃO LOCALIZADO %i\n\n",busca);
+				}
+			}
 			system("pause");
 			system("cls");
 		break;
@@ -142,6 +173,9 @@ int inserir(fila *pont_fila,int valor){
 	pont_fila->itens[pont_fila->total] = valor;//A POSIÇÃO FINAL IRÁ RECEBER O NOVO VALOR
 	
 	printf("VALOR INSERIDO : [%i] %i\n\n",pont_fila->total,pont_fila->itens[pont_fila->total]);//MOSTRA O QUE FOI FEITO
+
+	ordena_lista(pont_fila);//ORDENA APÓS INSERÇÃO
+
 	system("pause");
 	system("cls");
 }
@@ -168,6 +202,121 @@ int remover_da_fila(fila *pont_fila){
 		*/
 	}
 	pont_fila->total--;//IRÁ DIMINUIR O TAMANHO DO TOTAL. OU SEJA, IRÁ PERCORRER DE 0 ATÉ TOTAL-1
+}
+
+
+ordena_lista(fila *pont_fila){
+	int i,j,aux;
+	/*
+			O código abaixo representa a ordenação dos valores 
+			visando  facilitar o processo de busca binária
+	*/
+	
+	for(i=0;i<=pont_fila->total;i++){// 10 5
+		for(j=i+1;j<=pont_fila->total;j++){
+			if(pont_fila->itens[i] > pont_fila->itens[j]){
+				aux = pont_fila->itens[i];//maior valor
+				pont_fila->itens[i] = pont_fila->itens[j];
+				pont_fila->itens[j] = aux;
+			}
+		}
+	}
+}
+
+int busca_binaria(fila *pont_fila, int inicio, int fim, int chave){
+	int meio;
+	
+	/*
+		IRÁ EXECUTAR SE O VALOR DO INICIO FOR <= FIM
+			
+	
+	*/
+
+	if(inicio<=fim){
+
+		meio = (inicio + fim) /2; //RETORNO O INDÍCE DO MEIO ATRAVÉS DA DIVISÃO DE INTEIRO. 4.5 = 4/ 1.5 = 1
+
+		if(chave == pont_fila->itens[meio]){//SE O VALOR DIGITADO FOR IGUAL AO VALOR DO MEIO
+			return meio;//RETURNA O MEIO, QUE É O INDICE
+
+		}else{
+			if(chave < pont_fila->itens[meio]){//SE O VALOR DIGITADO FOR < QUE O VALOR DO INDICE DO MEIO
+				return busca_binaria(pont_fila, inicio, meio - 1,chave);
+				/*
+				Está retornando, recursivamente, o valor do ponteiro(elementos), 
+				FIM = será o valor de meio - 1, pois o valor digitado pelo usuário é menor que o valor do indice meio
+				
+				EXEMPLO :
+					
+					Indice :    0  1  2   3
+					Elementos : 5 10 15  20
+					
+				passo 1
+					inicio = 0
+					fim = 3
+					meio = (inicio+fim)/2. Será 3/2 = 1 (divisão inteira) 
+					busca : 5
+					
+					busca (5) é igual ao valor do indice [1]= 10? Não
+					
+					busca (5) é maior ou menor que indice[1]= 10 ? Menor
+					
+				passo 2
+					inicio = 0
+					fim = (meio - 1) pois o valor do usuário era maior
+					fim = 1 - 1 = 0
+					
+					meio =  0 - 0 = 0 / 2 = 0 (divisão inteira)
+					
+					busca (5) é igual ao valor do indice [0]= 5? Sim
+					Encontramos o valor
+				*/
+			}else if(chave > pont_fila->itens[meio]){
+				return busca_binaria(pont_fila, meio + 1, fim,chave);
+				/*
+					está retornando, recursivamente, o valor do ponteiro(elementos), 
+					INICIO = será o valor de meio + 1, pois o valor digitado pelo usuário é maior que o valor do indice meio
+					
+					Indice :    0  1  2   3
+					Elementos : 5 10 15  20
+	
+				EXEMPLO :
+	
+				passo 1
+					inicio = 0
+					fim = 3
+					meio = (inicio+fim)/2. Será 3/2 = 1 (divisão inteira) 
+					busca : 20
+					
+					busca (20) é igual ao valor do indice [1]= 10? Não
+					
+					busca (20) é maior ou menor que indice[1]= 10 ? maior
+					
+				passo 2
+					inicio = meio + 1, pois o valor do usuário era maior
+					inicio = 1 + 1 = 2
+					fim = 3
+					meio = 2 + 3 = 5. 5/2 = 2 (divisão inteira)
+					
+					busca (20) é igual ao valor do indice [2]= 15? Não
+					
+					busca (20) é maior ou menor que indice[2]= 15 ? maior
+ 				
+ 				passo 3
+					inicio = meio + 1, pois o valor do usuário era maior
+					inicio = 2 + 1 = 3
+					fim = 3
+					meio = 3+3 = 6. 6/2 = 3 (divisão inteira)
+					
+					busca (20) é igual ao valor do indice [3]= 20? Sim
+											
+				*/
+			}
+		}
+	}
+
+	return -1;//significa que não foi localizado o elemento
+		
 }
 
 
