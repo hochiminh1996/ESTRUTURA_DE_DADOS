@@ -2,7 +2,7 @@
 	ALGORITMO : PILHA
 	AUTOR : FELIPPE M.
 	DESCRIÇÃO : APLICAÇÃO DOS CONCEITOS BÁSICOS DE ESTRUTURA DE DADOS : FILA E BUSCA BINÁRIA.
-	
+	...
 */
 #include <stdlib.h>
 #include <stdio.h>
