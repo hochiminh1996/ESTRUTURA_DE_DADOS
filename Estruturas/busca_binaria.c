@@ -2,13 +2,13 @@
 	ALGORITMO : BUSCA
 	AUTOR : FELIPPE M.
 	DESCRIÇÃO : APLICAÇÃO DOS CONCEITOS BÁSICOS DE ESTRUTURA DE DADOS : BUSCA BINÁRIA
-	...
+	
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <locale.h>
-#define MAX 3
+#define MAX 5
 
 typedef struct{
 	int total;
