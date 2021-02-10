@@ -53,7 +53,7 @@ int escolha(int opt, fila *pont_fila){
 	switch(opt){
 		case 0:
 			if(pont_fila->total==-1){//CONSULTAR O VALOR DO TOTAL
-				printf("FILA VAZIA...\n\n");//-1 = VAZIA
+				printf("FILA VAZIA : %i\n\n",pont_fila->total);//-1 = VAZIA
 				system("pause");
 				system("cls");
 			}else{//CASO TENHA VALORES NA FILA, IRÁ EXIBIR SEUS VALORES
@@ -103,7 +103,7 @@ int escolha(int opt, fila *pont_fila){
 		break;
 		case 2:
 			if(pont_fila->total==-1){//FILA ZERADA
-				printf("ALERTA : NÃO FOI POSSÍVEL REMOVER ELEMENTOS\n\n");
+				printf("ALERTA : NÃO FOI POSSÍVEL REMOVER ELEMENTOS : %i\n\n",pont_fila->total);
 				system("pause");
 				system("cls");
 			}else{
@@ -119,7 +119,7 @@ int escolha(int opt, fila *pont_fila){
 		break;
 		case 3:
 			if(pont_fila->total == -1){
-				printf("NÃO HÁ ELEMENTOS NA FILA...\n\n");
+				printf("NÃO HÁ ELEMENTOS NA FILA : %i\n\n",pont_fila->total);
 			}else{
 				printf("DIGITE UM VALOR : ");
 				scanf("%i",&chave);//valor a ser pesquisado
@@ -151,7 +151,7 @@ int escolha(int opt, fila *pont_fila){
 		break;
 		case 4:
 			inicializar(pont_fila);//REAPROVEITAMENTO DE FUNÇÃO
-			printf("FILA ZERADA...\n\n");
+			printf("FILA ZERADA :%i...\n\n",pont_fila->total);
 			system("pause");
 			system("cls");
 		break;
